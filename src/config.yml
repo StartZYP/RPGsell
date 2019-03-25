@@ -1,0 +1,8 @@
+RPGsell:
+  MoneyLoreKey: 金钱
+  pointLoreKey: 点券
+  SellViewTile: §c§l出售界面
+  ConfirmButton:
+    FirstButtonName: 售出
+    secondButtonName: 确认售出
+  Msg: 恭喜你后得到{Points}和{Money}

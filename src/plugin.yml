@@ -1,0 +1,5 @@
+name: RPGsell
+main: com.qq44920040.Minecraft.RPGsell
+version: 1.0
+commands:
+  RPGsell:
