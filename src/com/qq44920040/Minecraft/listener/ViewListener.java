@@ -62,11 +62,9 @@ public class ViewListener implements Listener {
     public void InventorycloseEvent(InventoryCloseEvent event){
         Inventory inventory = event.getInventory();
         if (inventory.getTitle().equalsIgnoreCase(RPGsell.SellViewTile)||inventory.getTitle().equalsIgnoreCase(RPGsell.SellViewTile+"-已锁定")){
-            System.out.println("进入列111");
             for (int a=0;a<=44;a++){
                 ItemStack itemStack = inventory.getItem(a);
                 if (itemStack!=null){
-                    System.out.println("进入列");
                     event.getPlayer().getInventory().addItem(itemStack);
                 }
                 inventory.setItem(a,null);
