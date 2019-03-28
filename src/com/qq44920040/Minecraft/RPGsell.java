@@ -41,7 +41,7 @@ public class RPGsell extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (label.equalsIgnoreCase("RPGsell")&&args.length==1&&args[0].equalsIgnoreCase("reload")){
-            reloadConfig();
+            ReloadConfig();
             sender.sendMessage("§c§e重载成功");
         }
         if (sender instanceof Player &&label.equalsIgnoreCase("RPGsell")&&args.length==0){

@@ -12,18 +12,28 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.qq44920040.Minecraft.RPGsell.*;
 
 
 public class ViewListener implements Listener {
     @EventHandler
     public void InventoryClick(InventoryClickEvent event){
         Inventory inventory = event.getInventory();
-        if (inventory.getTitle().equalsIgnoreCase(RPGsell.SellViewTile)){
+        if (inventory.getTitle().equalsIgnoreCase(SellViewTile)){
             int Solt = event.getSlot();
+            ItemStack item = event.getCursor();
+            if (item!=null&&item.hasItemMeta()){
+                String templore = item.getItemMeta().getLore().toString();
+                if (templore.contains(pointLoreKeyStringKey)||templore.contains(MoneyLoreKeyStringKey)){
+                    event.setCancelled(true);
+                }
+            }
             if (Solt==49){
                 event.setCancelled(true);
                 ItemStack[] itemarry = inventory.getContents();
@@ -34,9 +44,11 @@ public class ViewListener implements Listener {
                 ((Player)event.getWhoClicked()).updateInventory();
             }else if (Solt>=45&&Solt<=53){
                 event.setCancelled(true);
+            }else if (Solt<=0){
+                event.setCancelled(true);
             }
         }
-        if (inventory.getTitle().equalsIgnoreCase(RPGsell.SellViewTile+"-已锁定")){
+        if (inventory.getTitle().equalsIgnoreCase(SellViewTile+"-已锁定")){
             int Solt = event.getSlot();
             if (Solt==49){
                 event.setCancelled(true);
@@ -61,7 +73,7 @@ public class ViewListener implements Listener {
     @EventHandler
     public void InventorycloseEvent(InventoryCloseEvent event){
         Inventory inventory = event.getInventory();
-        if (inventory.getTitle().equalsIgnoreCase(RPGsell.SellViewTile)||inventory.getTitle().equalsIgnoreCase(RPGsell.SellViewTile+"-已锁定")){
+        if (inventory.getTitle().equalsIgnoreCase(SellViewTile)||inventory.getTitle().equalsIgnoreCase(SellViewTile+"-已锁定")){
             for (int a=0;a<=44;a++){
                 ItemStack itemStack = inventory.getItem(a);
                 if (itemStack!=null){
@@ -74,8 +86,11 @@ public class ViewListener implements Listener {
 
     @EventHandler
     public void OpenInventoryPickEvent(EntityPickupItemEvent event){
-        if (event.getEntity() instanceof Player&&(((Player) event.getEntity()).getInventory().getTitle().contains(RPGsell.SellViewTile))){
-            event.setCancelled(true);
+        if (event.getEntity() instanceof Player){
+            InventoryView inv = ((Player) event.getEntity()).getOpenInventory();
+            if (inv.getTitle().contains(SellViewTile)){
+                event.setCancelled(true);
+            }
         }
     }
 }

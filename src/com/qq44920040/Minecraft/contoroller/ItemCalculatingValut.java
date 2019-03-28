@@ -10,20 +10,25 @@ import java.util.regex.Pattern;
 
 public class ItemCalculatingValut {
     public static int[] ItemVault(Set<ItemStack> ItemArray) {
-        int Points=0;
-        int Money=0;
+        int Points = 0;
+        int Money = 0;
         Pattern pattern = Pattern.compile("\\d*");
         for (ItemStack itemStack : ItemArray) {
-            if (itemStack!=null&&itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
+            if (itemStack != null && itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
                 for (String LineLore : itemStack.getItemMeta().getLore()) {
+                    int Stacknum = itemStack.getAmount();
                     String Lore = ChatColor.stripColor(LineLore);
-                    Matcher m  =pattern.matcher(Lore);
-                    if (m.find()){
-                        int Vaultadd = Integer.parseInt(m.group(0));
-                        if (Lore.contains(RPGsell.MoneyLoreKeyStringKey)) {
-                            Money = Money+ Vaultadd;
-                        } else if (Lore.contains(RPGsell.pointLoreKeyStringKey)){
-                            Points =Points + Vaultadd;
+                    if (Lore.contains(RPGsell.MoneyLoreKeyStringKey)) {
+                        Matcher m = pattern.matcher(Lore);
+                        if (m.find()) {
+                            int Vaultadd = Integer.parseInt(m.group(0));
+                            Money = Money + Vaultadd*Stacknum;
+                        }
+                    } else if (Lore.contains(RPGsell.pointLoreKeyStringKey)) {
+                        Matcher m = pattern.matcher(Lore);
+                        if (m.find()) {
+                            int Vaultadd = Integer.parseInt(m.group(0));
+                            Points = Points + Vaultadd*Stacknum;
                         }
                     }
                 }
