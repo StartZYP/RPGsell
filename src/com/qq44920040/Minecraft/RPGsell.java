@@ -58,12 +58,13 @@ public class RPGsell extends JavaPlugin {
     }
 
     private void ReloadConfig() {
+        reloadConfig();
         MoneyLoreKeyStringKey = getConfig().getString("RPGsell.MoneyLoreKey");
         pointLoreKeyStringKey = getConfig().getString("RPGsell.pointLoreKey");
         SellViewTile = getConfig().getString("RPGsell.SellViewTile");
         FirstButtonName = getConfig().getString("RPGsell.ConfirmButton.FirstButtonName");
         secondButtonName = getConfig().getString("RPGsell.ConfirmButton.secondButtonName");
         Msg = getConfig().getString("RPGsell.Msg");
-        reloadConfig();
+        System.out.println(Msg);
     }
 }

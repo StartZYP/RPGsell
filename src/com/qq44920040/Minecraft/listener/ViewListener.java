@@ -24,28 +24,25 @@ import static com.qq44920040.Minecraft.RPGsell.*;
 public class ViewListener implements Listener {
     @EventHandler
     public void InventoryClick(InventoryClickEvent event){
+        System.out.println(event.getSlot());
         Inventory inventory = event.getInventory();
-        if (inventory.getTitle().equalsIgnoreCase(SellViewTile)){
+        if (inventory.getTitle().equalsIgnoreCase(SellViewTile)) {
             int Solt = event.getSlot();
-            ItemStack item = event.getCursor();
-            if (item!=null&&item.hasItemMeta()){
-                String templore = item.getItemMeta().getLore().toString();
-                if (templore.contains(pointLoreKeyStringKey)||templore.contains(MoneyLoreKeyStringKey)){
-                    event.setCancelled(true);
-                }
-            }
-            if (Solt==49){
+            if (Solt == 49) {
                 event.setCancelled(true);
                 ItemStack[] itemarry = inventory.getContents();
-                for (int a=0;a<=44;a++){
-                    inventory.setItem(a,null);
+                for (int a = 0; a <= 44; a++) {
+                    inventory.setItem(a, null);
                 }
                 event.getWhoClicked().openInventory(SellView.OpenSellLockView(itemarry));
-                ((Player)event.getWhoClicked()).updateInventory();
-            }else if (Solt>=45&&Solt<=53){
+                ((Player) event.getWhoClicked()).updateInventory();
+                return;
+            } else if (Solt >= 45 && Solt <= 53) {
                 event.setCancelled(true);
-            }else if (Solt<=0){
+                return;
+            }else if (Solt < 0) {
                 event.setCancelled(true);
+                return;
             }
         }
         if (inventory.getTitle().equalsIgnoreCase(SellViewTile+"-已锁定")){
@@ -54,7 +51,21 @@ public class ViewListener implements Listener {
                 event.setCancelled(true);
                 Set<ItemStack> itemStacks = new HashSet<>();
                 for (int a=0;a<=44;a++){
-                    itemStacks.add(inventory.getItem(a));
+                    ItemStack item = inventory.getItem(a);
+                    if (item!=null){
+                        if (item.hasItemMeta()) {
+                            System.out.println("hasItemMeta");
+                            String templore = item.getItemMeta().hasLore()?item.getItemMeta().getLore().toString():"hehe";
+                            System.out.println(templore);
+                            if (templore.contains(pointLoreKeyStringKey)||templore.contains(MoneyLoreKeyStringKey)){
+                                itemStacks.add(item);
+                            }else {
+                                event.getWhoClicked().getInventory().addItem(item);
+                            }
+                        }else {
+                            event.getWhoClicked().getInventory().addItem(item);
+                        }
+                    }
                 }
                 int[] Vaults = ItemCalculatingValut.ItemVault(itemStacks);
                 PointsOrValut.give(event.getWhoClicked().getUniqueId(),Vaults[1]);
