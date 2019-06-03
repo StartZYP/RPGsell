@@ -4,12 +4,12 @@ import com.qq44920040.Minecraft.RPGsell;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Set;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ItemCalculatingValut {
-    public static int[] ItemVault(Set<ItemStack> ItemArray) {
+    public static int[] ItemVault(List<ItemStack> ItemArray) {
         int Points = 0;
         int Money = 0;
         Pattern pattern = Pattern.compile("\\d*");

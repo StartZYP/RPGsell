@@ -15,7 +15,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static com.qq44920040.Minecraft.RPGsell.*;
@@ -24,7 +26,6 @@ import static com.qq44920040.Minecraft.RPGsell.*;
 public class ViewListener implements Listener {
     @EventHandler
     public void InventoryClick(InventoryClickEvent event){
-        System.out.println(event.getSlot());
         Inventory inventory = event.getInventory();
         if (inventory.getTitle().equalsIgnoreCase(SellViewTile)) {
             int Solt = event.getSlot();
@@ -49,14 +50,12 @@ public class ViewListener implements Listener {
             int Solt = event.getSlot();
             if (Solt==49){
                 event.setCancelled(true);
-                Set<ItemStack> itemStacks = new HashSet<>();
+                List<ItemStack> itemStacks =new ArrayList<>();
                 for (int a=0;a<=44;a++){
                     ItemStack item = inventory.getItem(a);
                     if (item!=null){
                         if (item.hasItemMeta()) {
-                            System.out.println("hasItemMeta");
                             String templore = item.getItemMeta().hasLore()?item.getItemMeta().getLore().toString():"hehe";
-                            System.out.println(templore);
                             if (templore.contains(pointLoreKeyStringKey)||templore.contains(MoneyLoreKeyStringKey)){
                                 itemStacks.add(item);
                             }else {
